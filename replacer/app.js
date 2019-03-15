@@ -1,9 +1,7 @@
-const reText = />([\w\S\s]*?)</;
 const reTag = /<([\w]+):(.*?)>/g;
 
 async function main (file) {
     let text = await readFile(file);
-    console.log(file);
     let result;
     while ((result = reTag.exec(text)) !== null) {
         text = text.replace(result[0], `{${result[1]}: ${result[2].replace(/,/g, ' ')}}`);
@@ -23,5 +21,4 @@ async function main (file) {
     text = text.replace(/\{395\}/g, 'ё');
     let blob = new Blob([text], { type: "text/plain;charset=utf-8" });
     saveAs(blob, file.name);
-    console.log(text);
 }
